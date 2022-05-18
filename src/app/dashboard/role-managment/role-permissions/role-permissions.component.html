@@ -5,8 +5,8 @@
     </header>
 
     <!--Role List-->
-    <mat-selection-list #roles [multiple]="false">
-      <mat-list-option *ngFor="let role of roles$ | async" [value]="role" (click)="pickRole(role)">
+    <mat-selection-list [multiple]="false">
+      <mat-list-option *ngFor="let role of roles" [selected]="pickedRole.id === role.id" [value]="role" (click)="pickRole(role)">
         <p>{{role.name }}</p>
       </mat-list-option>
       <mat-list-option class="add-role" (click)="addNewRole()">
@@ -15,14 +15,14 @@
     </mat-selection-list>
   </div>
 
-  <div class="role-description" *ngIf="permissions$ | async as permissions">
+  <div class="role-description" *ngIf="permissions">
     <h3 *ngIf="permissions.length === 0">ამ როლს არ აქვს უფლებები</h3>
     <h2 *ngIf="pickedRole">{{pickedRole.name}}</h2>
 
     <mat-list>
 
       <!--Permissions List-->
-      <ng-container *ngIf="permissions.length > 0">
+      <ng-container *ngIf="pickedRole?.id">
         <mat-list-item *ngFor="let permission of permissions">
           <p mat-line>{{permission.alias }}</p>
           <button mat-icon-button color="warn" (click)="deletePermission(pickedRole.id, permission)">
@@ -34,7 +34,7 @@
       <!--Add New Permission-->
       <mat-list-item class="add-permission">
         <p mat-line> ახალი უფლების დამატება</p>
-        <button mat-icon-button (click)="addPermissionsToRole(permissions, pickedRole.id)">
+        <button mat-icon-button (click)="openAddPermissionDialog(permissions, pickedRole.id)">
           <mat-icon>add_box</mat-icon>
         </button>
       </mat-list-item>

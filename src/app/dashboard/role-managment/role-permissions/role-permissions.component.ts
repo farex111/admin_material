@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {finalize, map, Observable, Subject, Subscription, tap} from "rxjs";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from "rxjs";
 import {RolePermissionsService} from "./role-permissions.service";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "../../../shared/components/dialog/dialog.component";
@@ -17,14 +17,16 @@ import {AddPermissionToRoleModel} from "../../../shared/models/add-permission-to
   templateUrl: './role-permissions.component.html',
   styleUrls: ['./role-permissions.component.scss']
 })
-export class RolePermissionsComponent implements OnInit {
+export class RolePermissionsComponent implements OnInit, OnDestroy {
   pickedRole!: Role;
-  permissions$!: Subject<Array<Permission>>;
-  roles$!: Observable<Array<Role>>
+  permissions!: Array<Permission>;
+  roles!: Array<Role>
 
   addNewRoleSub!: Subscription;
   deleteRoleSub!: Subscription;
   addPermissionToRoleSub!: Subscription;
+  getPermissionsSub!: Subscription;
+  getRolesSub!: Subscription;
 
   constructor(
     private rolePermissionsService: RolePermissionsService,
@@ -37,9 +39,28 @@ export class RolePermissionsComponent implements OnInit {
     this.getAllRoles();
   }
 
+  ngOnDestroy(): void {
+    if (this.addNewRoleSub) {
+      this.addNewRoleSub.unsubscribe();
+    }
+    if (this.deleteRoleSub) {
+      this.deleteRoleSub.unsubscribe();
+    }
+    if (this.addPermissionToRoleSub) {
+      this.addPermissionToRoleSub.unsubscribe();
+    }
+    if (this.getPermissionsSub) {
+      this.getPermissionsSub.unsubscribe();
+    }
+    if (this.getRolesSub) {
+      this.getRolesSub.unsubscribe();
+    }
+  }
+
   getAllRoles() {
     this.loadingService.start();
-    this.roles$ = this.rolePermissionsService.getAllRoles().pipe(tap((res: GetRolesModel) => {
+    this.getRolesSub = this.rolePermissionsService.getAllRoles().subscribe((res: GetRolesModel) => {
+      this.loadingService.stop()
       if (res.errorCode) {
         this.dialog.open(DialogComponent, {
           width: '30%',
@@ -51,8 +72,15 @@ export class RolePermissionsComponent implements OnInit {
             warning: true
           }
         });
+      } else {
+        this.roles = res.data;
+        if (this.roles.length > 0) {
+          this.pickRole(this.roles[0]);
+        } else {
+          this.pickRole(new Role())
+        }
       }
-    }), map(res => res.data), finalize(() => this.loadingService.stop()));
+    })
   }
 
   pickRole(role: Role) {
@@ -64,7 +92,8 @@ export class RolePermissionsComponent implements OnInit {
 
   getPermissions(id?: number) {
     this.loadingService.start();
-    this.permissions$ = this.rolePermissionsService.getPermissions(id).pipe(tap((res: GetPermissionsModel) => {
+    this.getPermissionsSub = this.rolePermissionsService.getPermissions(id).subscribe((res: GetPermissionsModel) => {
+      this.loadingService.stop()
       if (res.errorCode) {
         this.dialog.open(DialogComponent, {
           width: '30%',
@@ -76,8 +105,10 @@ export class RolePermissionsComponent implements OnInit {
             warning: true
           }
         });
+      } else {
+        this.permissions = res.data;
       }
-    }), map(res => res.data), finalize(() => this.loadingService.stop())) as Subject<any>
+    })
   }
 
   addNewRole() {
@@ -124,7 +155,6 @@ export class RolePermissionsComponent implements OnInit {
       this.loadingService.stop();
       if (!res.errorCode) {
         this.getAllRoles();
-        this.permissions$.next([])
       } else {
         this.dialog.open(DialogComponent, {
           width: '30%',
@@ -140,13 +170,13 @@ export class RolePermissionsComponent implements OnInit {
     });
   }
 
-  addPermissionsToRole(rolePermissions: Permission[], roleId: number) {
+  openAddPermissionDialog(rolePermissions: Permission[], roleId: number) {
     this.loadingService.start();
     this.rolePermissionsService.getPermissions().subscribe((res: GetPermissionsModel) => {
       this.loadingService.stop();
       let temp = res.data;
       for (const rolePermission of rolePermissions) {
-        temp = temp.filter((x) => x.id !== rolePermission.id)
+        temp = temp.filter((x: Permission) => x.id !== rolePermission.id)
       }
       this.dialog.open(AddPermissionsToRoleComponent, {
         width: '50%',
@@ -159,36 +189,48 @@ export class RolePermissionsComponent implements OnInit {
         const mappedTemp = res.map((x: Permission) => x.id);
         const oldPermissions = rolePermissions.map((x: Permission) => x.id);
         const newPermissions = [...oldPermissions, ...mappedTemp];
-        this.addPermissionToRoleSub = this.rolePermissionsService.addPermissionsToRole(roleId, newPermissions)
-          .subscribe((res: AddPermissionToRoleModel) => {
-            if (!res.errorCode) {
-              this.getPermissions(roleId);
-            } else {
-              this.dialog.open(DialogComponent, {
-                width: '30%',
-                restoreFocus: false,
-                data: {
-                  title: 'შეცდომა',
-                  content: res.errorCode,
-                  cancelText: 'დახურვა',
-                  warning: true
-                }
-              });
-            }
-          });
+        this.addPermissionToRole(roleId, newPermissions)
       });
     });
   }
 
-  deletePermission(roleId: number, permission: Permission) {
+  addPermissionToRole(roleId: number, newPermissions: number []) {
     this.loadingService.start();
-    this.rolePermissionsService.getPermissions(roleId).subscribe((res: GetPermissionsModel) => {
-      this.loadingService.stop();
-      let temp = res.data;
+    this.addPermissionToRoleSub = this.rolePermissionsService.addPermissionsToRole(roleId, newPermissions)
+      .subscribe((res: AddPermissionToRoleModel) => {
+        this.loadingService.stop();
+        if (!res.errorCode) {
+          this.getPermissions(roleId);
+        } else {
+          this.dialog.open(DialogComponent, {
+            width: '30%',
+            restoreFocus: false,
+            data: {
+              title: 'შეცდომა',
+              content: res.errorCode,
+              cancelText: 'დახურვა',
+              warning: true
+            }
+          });
+        }
+      });
+  }
 
-      for (const per of temp) {
-        temp = temp.filter((x: Permission) => x.id !== permission.id)
+  deletePermission(roleId: number, permission: Permission) {
+    this.dialog.open(DialogComponent, {
+      width: '30%',
+      restoreFocus: false,
+      disableClose: true,
+      data: {
+        content: 'ნამდვილად გსურთ უფლების წაშლა?',
+        cancelText: 'არა',
+        confirmText: 'კი',
       }
-    });
+    }).afterClosed().subscribe((res: boolean) => {
+      if (res) {
+        let filteredPermissions = this.permissions.map((item: Permission) => item.id).filter((perId: number) => perId !== permission.id);
+        this.addPermissionToRole(roleId, filteredPermissions);
+      }
+    })
   }
 }
