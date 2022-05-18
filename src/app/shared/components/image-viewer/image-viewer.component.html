@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="toolbar">
+    <h3 class="text">{{ pickedImage.text }}</h3>
+
+    <div class="buttons">
+      <button  class="rotate left" (click)="rotationPoint = rotationPoint - 90"></button>
+      <button  class="rotate right" (click)="rotationPoint = rotationPoint + 90"></button>
+      <button class="close" (click)="close()"></button>
+    </div>
+  </div>
+
+  <div class="img-controls previous" (click)="previousPage()">
+    <button></button>
+  </div>
+
+  <div class="img" [ngStyle]="{ transform: 'rotate(' + rotationPoint + 'deg)',
+      'background-image': 'url(data:image/gif;base64,' + pickedImage.image + ')'
+    }">
+  </div>
+
+  <div class="img-controls next" (click)="nextImage()">
+    <button></button>
+  </div>
+</div>

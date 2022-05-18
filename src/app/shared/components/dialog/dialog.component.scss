@@ -1,0 +1,134 @@
+.container {
+
+  .content {
+    overflow: hidden;
+    line-height: 20px;
+    padding: 20px;
+  }
+
+  .success {
+    width: 120px;
+    margin: auto;
+    padding: 30px 0;
+
+    .circle,
+    .circle-border {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+    }
+    .circle {
+      z-index: 1;
+      position: relative;
+      background: white;
+      transform: scale(1);
+      animation: success-anim 800ms ease-in-out;
+    }
+    .circle-border {
+      z-index: 0;
+      position: absolute;
+      background: #8f6;
+      transform: scale(1.1);
+      animation: circle-anim 500ms ease-in-out;
+    }
+
+    @keyframes success-anim {
+      0% {
+        transform: scale(0);
+      }
+      30% {
+        transform: scale(0);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes circle-anim {
+      from {
+        transform: scale(0);
+      }
+      to {
+        transform: scale(1.1);
+      }
+    }
+
+    .success::before,
+    .success::after {
+      content: "";
+      display: block;
+      height: 6px;
+      background: #8f6;
+      position: absolute;
+    }
+
+    .success::before {
+      width: 34px;
+      top: 58%;
+      left: 23%;
+      transform: rotateZ(50deg);
+    }
+
+    .success::after {
+      width: 60px;
+      top: 50%;
+      left: 35%;
+      transform: rotateZ(-50deg);
+    }
+  }
+  .warning {
+    width: 120px;
+    margin: auto;
+    padding: 30px 0;
+
+    .warning-circle,
+    .warning-circle-border {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+    }
+    .warning-circle {
+      z-index: 1;
+      position: relative;
+      background: white;
+      transform: scale(1);
+      color: red;
+      animation: warning-anim 800ms ease-in-out;
+      mat-icon {
+        font-size: 60px;
+        position: absolute;
+        top: 33%;
+        left: 36%;
+        transform: translate(-50%, -50%);
+      }
+    }
+    .warning-circle-border {
+      z-index: 0;
+      position: absolute;
+      background: red;
+      transform: scale(1.1);
+      animation: circle-anim 500ms ease-in-out;
+    }
+
+    @keyframes warning-anim {
+      0% {
+        transform: scale(0);
+      }
+      30% {
+        transform: scale(0);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes circle-anim {
+      from {
+        transform: scale(0);
+      }
+      to {
+        transform: scale(1.1);
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="header">
+    <h1 mat-dialog-title>ახალი როლის დამატება</h1>
+    <button mat-icon-button [mat-dialog-close]="false">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <form [formGroup]="addNewRoleForm">
+    <mat-form-field appearance="outline">
+      <mat-label>როლის სახელი</mat-label>
+      <input matInput placeholder="Admin" autocomplete="off" formControlName="roleName">
+      <mat-error *ngIf="addNewRoleForm.hasError('required', 'roleName')">შეიყვანეთ როლის სახელი</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>უფლებების ფილტრი</mat-label>
+      <input matInput placeholder="Delete User" autocomplete="off" formControlName="search">
+    </mat-form-field>
+
+    <mat-selection-list formControlName="permissionId">
+      <mat-list-option
+        *ngFor="let permission of data.permissions | searchPermission: addNewRoleForm.controls['search'].value"
+        [value]="permission">
+        {{permission.alias}}
+      </mat-list-option>
+    </mat-selection-list>
+
+    <div mat-dialog-actions class="buttons" [align]="'end'">
+      <button mat-button color="warn" [mat-dialog-close]="false">უარყოფა</button>
+      <button mat-raised-button color="primary" [disabled]="addNewRoleForm.invalid" [mat-dialog-close]="submitForm()">
+        დამახსოვრება
+      </button>
+    </div>
+  </form>
+</div>

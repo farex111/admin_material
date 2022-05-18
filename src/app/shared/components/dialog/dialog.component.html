@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="header" [align]="data.success || data.warning ? 'center' : 'start'">
+    <h1 mat-dialog-title>{{data.title}}</h1>
+  </div>
+
+  <!--Success Animation-->
+  <div class="success" *ngIf="data.success">
+    <div class="circle-border"></div>
+    <div class="circle">
+      <div class="success"></div>
+    </div>
+  </div>
+
+  <!--Warning Animation-->
+  <div class="warning" *ngIf="data.warning">
+    <div class="warning-circle-border"></div>
+    <div class="warning-circle">
+      <mat-icon>warning</mat-icon>
+    </div>
+  </div>
+
+  <div class="content" mat-dialog-content [align]="data.success || data.warning ? 'center' : 'start'">
+    {{data.content}}
+  </div>
+  <div mat-dialog-actions class="buttons" [align]="data.success || data.warning ? 'center' : 'end'">
+    <button mat-button color="warn" [mat-dialog-close]="false">{{data.cancelText}}</button>
+    <button mat-raised-button color="primary" *ngIf="data.confirmText"
+            [mat-dialog-close]="true">{{data.confirmText}}</button>
+  </div>
+</div>
+

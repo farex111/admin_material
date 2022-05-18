@@ -1,0 +1,44 @@
+.profile {
+  height: max-content;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  .left-section {
+    padding: 20px;
+    width: 100%;
+    border-right: 1px solid #ccc;
+
+    h2 {
+      color: #0061AF;
+    }
+  }
+
+  .right-section {
+    padding: 20px;
+    width: 100%;
+    background-image: url("../../../assets/images/icons/password-blue.svg");
+    background-size: auto 50%;
+    background-repeat: no-repeat;
+    background-position: right 20% center;
+
+    h2 {
+      color: #0061AF;
+    }
+    .wrapper {
+      form {
+        width: 50%;
+        display: grid;
+        mat-form-field {
+          .lock {
+            color: #ccc;
+            margin-right: 10px;
+          }
+          span {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}

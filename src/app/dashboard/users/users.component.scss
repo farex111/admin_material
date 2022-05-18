@@ -1,0 +1,88 @@
+.user-list-page {
+  padding: 20px 0;
+  .background {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    background-color: rgba(63, 63, 63, 0.322);
+
+    .otp-dialog-container {
+      position: absolute;
+      width: 500px;
+      height: 200px;
+      top: calc(50% - 100px);
+      z-index: 2;
+      left: calc(50% - 250px);
+      border-radius: 5px;
+      background-color: white;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+  }
+
+  form {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+
+    mat-form-field {
+      width: 30%;
+
+      mat-icon {
+        img {
+          width: 20px;
+        }
+      }
+    }
+
+    button {
+      margin-left: 10px;
+    }
+  }
+
+  .table-container {
+    .container {
+      height: 470px;
+      overflow: auto;
+      table {
+        width: 100%;
+        text-align: center;
+
+        thead {
+          th {
+            padding: 10px 0;
+            color: #0000008a;
+            max-width: min-content;
+          }
+        ;
+        }
+
+        tbody {
+          .sso-bg{
+            background: #ccc;
+          }
+          th {
+            padding: 20px 0;
+            border-bottom: 1px solid #0000001f;
+            border-top: 1px solid #0000001f;
+          }
+          td {
+            padding: 20px 0;
+            border-bottom: 1px solid #0000001f;
+            border-top: 1px solid #0000001f;
+
+            mat-icon {
+              font-weight: 900;
+            }
+
+            .reset_password {
+              color: #a5e353;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

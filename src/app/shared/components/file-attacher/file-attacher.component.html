@@ -1,1 +1,61 @@
-<p>file-attacher works!</p>
+<div class="attacher-wrapper" *ngIf="uploaderType=='multiple'">
+
+  <div class="attached-files">
+    <div class="attached-file" *ngFor="let attached of globalAttachedFiles">
+      <p>{{ attached.name }}</p>
+      <div class="delete" (click)="deleteAttachedFile(attached)"></div>
+    </div>
+  </div>
+
+  <form [formGroup]="uploadForm">
+    <div class="button-with-icon" [ngClass]="{'disabled': disabled}">
+      <div class="button-icon attach"></div>
+      <input
+        formControlName="file"
+        type="file"
+        id="files"
+        multiple
+        (change)="onFileChange($event)"
+        onclick="this.value=null;"
+      />
+      <label for="file" class="custom-file-upload">
+        <i class="fa fa-cloud-upload"></i> ფაილის მიმაგრება
+      </label>
+    </div>
+  </form>
+
+</div>
+
+<div class="attacher-wrapper" *ngIf="uploaderType=='single'">
+
+  <div class="attached-files">
+    <div class="attached-file" *ngIf="globalAttachedFiles.length">
+      {{ globalAttachedFiles[0].name }}
+      <div
+        class="delete"
+        (click)="deleteAttachedFile(globalAttachedFiles[0])"
+      ></div>
+    </div>
+  </div>
+
+  <form [formGroup]="uploadForm">
+
+    <div class="button-with-icon">
+      <div class="button-icon attach"></div>
+      <input
+        formControlName="file"
+        type="file"
+        id="file"
+        multiple
+        (change)="onFileChange($event)"
+        onclick="this.value=null;"
+      />
+      <label for="file" class="custom-file-upload" *ngIf="!globalAttachedFiles.length">
+        <i class="fa fa-cloud-upload"></i> ფაილის მიმაგრება
+      </label>
+    </div>
+
+  </form>
+
+</div>
+

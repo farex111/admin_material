@@ -1,0 +1,98 @@
+<div class="user-list-page">
+  <div class="background" *ngIf="otpDialogOpen">
+    <div class="otp-dialog-container">
+      <app-otp-dialog (operationResult)="getOperationResult($event)"></app-otp-dialog>
+    </div>
+  </div>
+
+  <form autocomplete="off" [formGroup]="searchForm">
+    <mat-form-field appearance="outline">
+      <mat-label>შეიყვანე საძიებო სიტყვა</mat-label>
+      <input matInput placeholder="52001025558" formControlName="searchValue">
+      <mat-icon matPrefix><img src="../../../assets/images/icons/search.svg" alt=""></mat-icon>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="submitForm()">ძებნა</button>
+  </form>
+
+  <div class="table-container">
+    <div class="container" *ngIf="userList$ | async as userList">
+      <table>
+        <thead>
+        <tr>
+          <th>მომხმარებელი</th>
+          <th>პირადი ნომერი</th>
+          <th>მობილური</th>
+          <th>სახელი</th>
+          <th>გვარი</th>
+          <th>იმეილი</th>
+          <th>იურიდიულ პირზე <br> დაკავშირებული</th>
+          <th>სისტემურად <br> დაბლოკილი</th>
+          <th>დაბლოკილი</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody *ngFor="let user of userList">
+        <tr>
+          <td>{{user.login}}</td>
+          <td>{{user.personalData.personalNumber}}</td>
+          <td>{{user.personalData.phone}}</td>
+          <td>{{user.personalData.firstName}}</td>
+          <td>{{user.personalData.lastName}}</td>
+          <td>{{user.personalData.email}}</td>
+          <td><mat-icon color="primary" *ngIf="user.userCompanyRoles[0]">check</mat-icon></td>
+          <td><mat-icon color="primary" *ngIf="user.isSystemBlocked">check</mat-icon></td>
+          <td><mat-icon color="primary" *ngIf="user.isBlocked">check</mat-icon></td>
+          <td>
+            <ng-container>
+              <button *ngIf="!user.isSystemBlocked" mat-icon-button matTooltip="პაროლის გენერაცია" (click)="generateNewPassword(user)">
+                <mat-icon class="reset_password">rotate_left</mat-icon>
+              </button>
+              <button *ngIf="!user.isSystemBlocked" mat-icon-button matTooltip="მომხმარებლის დაბლოკვა" (click)="blockSsoUser(user.id)">
+                <mat-icon color="primary">lock</mat-icon>
+              </button>
+              <button *ngIf="user.isSystemBlocked" mat-icon-button matTooltip="მომხმარებლის განბლოკვა" (click)="unblockSsoUser(user)">
+                <mat-icon color="primary">lock_open</mat-icon>
+              </button>
+            </ng-container>
+          </td>
+        </tr>
+        <ng-container *ngIf="user.userCompanyRoles[0] && (user.isSSO || user.isKeyUser)">
+          <tr class="sso-bg">
+            <th>იურიდიული პირი</th>
+            <th>საიდენთიფიკაციო</th>
+            <th>როლი</th>
+            <th>რეგისტრაციის თარიღი</th>
+            <th>Single Sign-On</th>
+            <th>Key User</th>
+            <th>სტატუსი</th>
+            <th>დაბლოკვის მიზეზი</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr class="sso-bg" *ngFor="let company of user.userCompanyRoles">
+            <td>{{company.company.name}}</td>
+            <td>{{company.company.taxCode}}</td>
+            <td>{{company.company.role}}</td>
+            <td>{{company?.company?.dateCreated | date: 'M/d/yy'}}</td>
+            <td><mat-icon color="primary" *ngIf="user.isSSO">check</mat-icon></td>
+            <td><mat-icon color="primary" *ngIf="user.isKeyUser">check</mat-icon></td>
+            <td>{{company.active ? "აქტიური" : 'დაბლოკილი'}}</td>
+            <td>{{company.reason}}</td>
+            <td></td>
+            <td>
+              <ng-container *ngIf="user.isSSO">
+                <button *ngIf="company.active" mat-icon-button matTooltip="კომპანიის დაბლოკვა" (click)="blockCompany(user.id, company.companyId)">
+                  <mat-icon color="primary">lock</mat-icon>
+                </button>
+                <button *ngIf="!company.active" mat-icon-button matTooltip="კომპანიის განბლოკვა" (click)="unblockCompany(user.id, company.companyId, user)">
+                  <mat-icon color="primary">lock_open</mat-icon>
+                </button>
+              </ng-container>
+            </td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

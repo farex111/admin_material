@@ -1,0 +1,96 @@
+<div class="profile" *ngIf="userData$ | async as userData">
+  <div class="left-section">
+    <h2 mat-subheader>მომხმარებლის ინფორმაცია</h2>
+    <div class="wrapper">
+      <mat-list>
+        <mat-list-item>
+          <h4 mat-line>სახელი</h4>
+          <p>{{userData.firstName}}</p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <h4 mat-line>გვარი</h4>
+          <p>{{userData.lastName}}</p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <h4 mat-line>მომხმარებელის სახელი</h4>
+          <p>{{userData.userName}}</p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <h4 mat-line>პირადი ნომერი</h4>
+          <p>{{userData.personalNumber}}</p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <h4 mat-line>როლი</h4>
+          <p>{{userData.role}}</p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+    </div>
+  </div>
+  <div class="right-section"
+       [ngStyle]="{'background-image' : changePassForm.invalid && changePassForm.touched
+       ? 'url(../../../assets/images/icons/password-red.svg)'
+       : 'url(../../../assets/images/icons/password-blue.svg)'}">
+    <h2 mat-subheader>პაროლის შეცვლა</h2>
+    <div class="wrapper">
+      <form autocomplete="off" [formGroup]="changePassForm">
+
+        <!--Old Password-->
+        <mat-form-field appearance="outline">
+          <mat-label>ძველი პაროლი</mat-label>
+          <input matInput [type]="oldPassHide ? 'password' : 'text'" formControlName="oldPassword">
+          <span mat-icon-button matSuffix (click)="oldPassHide = !oldPassHide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="oldPassHide">
+          <mat-icon>{{oldPassHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </span>
+          <mat-icon class="lock" matPrefix>lock_open</mat-icon>
+          <mat-error *ngIf="changePassForm.hasError('required', 'oldPassword')">
+            შეიყვანეთ ძველი პაროლი
+          </mat-error>
+        </mat-form-field>
+
+        <!--New Password-->
+        <mat-form-field appearance="outline">
+          <mat-label>ახალი პაროლი</mat-label>
+          <input matInput [type]="newPassHide ? 'password' : 'text'" formControlName="password">
+          <span mat-icon-button matSuffix (click)="newPassHide = !newPassHide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="newPassHide">
+          <mat-icon>{{newPassHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </span>
+          <mat-icon class="lock" matPrefix>lock_open</mat-icon>
+          <mat-error *ngIf="changePassForm.hasError('required', 'password')">
+            შეიყვანეთ ახალი პაროლი
+          </mat-error>
+          <mat-error *ngIf="changePassForm.hasError('minlength', 'password')">
+            პაროლის სიგრძე უნდა აღემატებოდეს 8 სიმბოლოს
+          </mat-error>
+          <mat-error *ngIf="changePassForm.hasError('pattern', 'password')">
+            პაროლი უნდა შეიცავდეს დიდ სიმბოლოს და რიცხვს
+          </mat-error>
+        </mat-form-field>
+
+        <!--Password Confirm-->
+        <mat-form-field appearance="outline">
+          <mat-label>გაიმეორეთ ახალი პაროლი</mat-label>
+          <input matInput [type]="repeatPassHide ? 'password' : 'text'" formControlName="passwordConfirm"
+                 [errorStateMatcher]="matcher">
+          <span mat-icon-button matSuffix (click)="repeatPassHide = !repeatPassHide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="repeatPassHide">
+          <mat-icon>{{repeatPassHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </span>
+          <mat-icon class="lock" matPrefix>lock_open</mat-icon>
+          <mat-error *ngIf="changePassForm.hasError('passwordsNotMatching')">
+            პაროლი არ ემთხვევა
+          </mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" [disabled]="changePassForm.invalid" (click)="onSubmit()">შეცვლა</button>
+      </form>
+    </div>
+  </div>
+</div>
+

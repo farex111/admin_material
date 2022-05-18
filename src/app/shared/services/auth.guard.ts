@@ -5,7 +5,7 @@ import {GeneralRequestService} from "./general-request.service";
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuardService implements CanActivate {
+export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
     private generalRequestService: GeneralRequestService

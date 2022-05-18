@@ -1,0 +1,33 @@
+<div class="sms-request-container">
+  <div class="sms-input-wrapper" [ngClass]="{invalid: !valid, disabled: disabled || loading, loading: loading}">
+    <div class="sms-input">
+      <p>SMS</p>
+      <input
+        type="text"
+        digitOnly
+        maxlength="4"
+        [(ngModel)]="smsCode"
+        (select)="disableSelect($event)"
+        (keydown)="disableArrows($event)"
+        (input)="smsOnInput()"
+        name="new-password"
+        autocomplete="off"
+      />
+      <div class="code">
+        <h4 [ngClass]="{focused: smsCode.length === 0, finished: smsCode.length === 4}"> {{ smsCode.charAt(0) }}</h4>
+        <h4 [ngClass]="{focused: smsCode.length === 1, finished: smsCode.length === 4}"> {{ smsCode.charAt(1) }}</h4>
+        <h4 [ngClass]="{focused: smsCode.length === 2, finished: smsCode.length === 4}"> {{ smsCode.charAt(2) }}</h4>
+        <h4 [ngClass]="{focused: smsCode.length === 3, finished: smsCode.length === 4}"> {{ smsCode.charAt(3) }}</h4>
+      </div>
+    </div>
+    <button class="clear" type="button" (mouseover)="onClearHover()" (mouseleave)="onClearBlur()" (click)="clearCode()"></button>
+  </div>
+
+  <div class="countdown">
+    <h2 *ngIf="showTimer && !clearBtnHovered && !otpSendLoading && time > 0">
+      კოდი აქტიურია :
+      <span>{{ Math.floor(time / 60) }} წუთი და {{ time % 60 }}წამი</span>
+    </h2>
+    <h2 class="blue" *ngIf="clearBtnHovered" (click)="clearCode()">კოდის წაშლა</h2>
+  </div>
+</div>

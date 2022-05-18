@@ -1,1 +1,108 @@
-<p>face-recognition works!</p>
+
+<div class="face-recognition-page">
+  <form [formGroup]="searchForm">
+
+    <!--Personal Number Input-->
+    <mat-form-field appearance="outline">
+      <mat-label>პირადი ნომერი</mat-label>
+      <input matInput placeholder="52001273127" formControlName="personalNumber">
+      <mat-icon matPrefix="">credit_card</mat-icon>
+    </mat-form-field>
+
+    <!--Date From Input-->
+    <mat-form-field appearance="outline">
+      <mat-label>თარიღი - დან</mat-label>
+      <input matInput placeholder="5/17/2022" [matDatepicker]="fromDate" formControlName="fromDate">
+      <mat-datepicker-toggle matPrefix [for]="fromDate"></mat-datepicker-toggle>
+      <mat-datepicker #fromDate></mat-datepicker>
+    </mat-form-field>
+
+    <!--Date To Input-->
+    <mat-form-field appearance="outline">
+      <mat-label>თარიღი - მდე</mat-label>
+      <input matInput placeholder="5/17/2022" [matDatepicker]="toDate" formControlName="toDate">
+      <mat-datepicker-toggle matPrefix [for]="toDate"></mat-datepicker-toggle>
+      <mat-datepicker #toDate></mat-datepicker>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" [disabled]="searchForm.invalid" (click)="submitForm()">ძებნა</button>
+  </form>
+
+  <div class="table-wrapper" *ngIf="dataSource">
+    <table mat-table [dataSource]="dataSource">
+
+      <!-- Personal Number Column -->
+      <ng-container matColumnDef="personalId">
+        <th mat-header-cell *matHeaderCellDef> პირადი ნომერი</th>
+        <td mat-cell *matCellDef="let element"> {{element.idNum}} </td>
+      </ng-container>
+
+      <!-- FirstName and Last Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> სახელი და გვარი</th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} {{element.surName}} </td>
+      </ng-container>
+
+      <!-- Loan Type Column -->
+      <ng-container matColumnDef="loanType">
+        <th mat-header-cell *matHeaderCellDef> სესხის ტიპი</th>
+        <td mat-cell *matCellDef="let element"> {{returnEnumValue(element.loanType)}} </td>
+      </ng-container>
+
+      <!-- Document Number Column -->
+      <ng-container matColumnDef="docNumber">
+        <th mat-header-cell *matHeaderCellDef> დოკუმენტის ნომერი</th>
+        <td mat-cell *matCellDef="let element"> {{element.docNumber}} </td>
+      </ng-container>
+
+      <!-- Face Match Column -->
+      <ng-container matColumnDef="matchLevel">
+        <th mat-header-cell *matHeaderCellDef> სახის დამთხვევა</th>
+        <td mat-cell *matCellDef="let element"> {{element.matchLevel}} </td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="success">
+        <th mat-header-cell *matHeaderCellDef>სტატუსი</th>
+        <td mat-cell *matCellDef="let element"> {{element.success ? 'წარმატება' : 'შეცდომა'}} </td>
+      </ng-container>
+
+      <!-- Date Column -->
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>თარიღი</th>
+        <td mat-cell *matCellDef="let element"> {{element.dateCreated | date: "dd/MM/yyyy HH:mm:ss"}} </td>
+      </ng-container>
+
+      <!-- Photos Column -->
+      <ng-container matColumnDef="images">
+        <th mat-header-cell *matHeaderCellDef>სურათები</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button matTooltip="წინა მხარე" (click)="openImageViewer(element, 'front')">
+            <img src="../../../assets/images/icons/idCard.svg" alt=""/>
+          </button>
+          <button mat-icon-button matTooltip="სელფი" (click)="openImageViewer(element, 'selfie')">
+            <img src="../../../assets/images/icons/selfie.svg" alt=""/>
+          </button>
+          <button mat-icon-button matTooltip="უკანა მხარე" (click)="openImageViewer(element, 'back')">
+            <img src="../../../assets/images/icons/idCardBack.svg" alt=""/>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20, 50, 100]"
+                   [pageSize]=pageSize
+                   showFirstLastButtons>
+    </mat-paginator>
+  </div>
+</div>
+
+<app-image-viewer
+  *ngIf="openImageViewerWindow"
+  [images]="imageViewGallery"
+  (closeWindow)="openImageViewerWindow = false">
+</app-image-viewer>
+
+

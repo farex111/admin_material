@@ -1,0 +1,21 @@
+table {
+  width: 100%;
+
+  .textCenter {
+    text-align: center;
+  }
+
+  tr {
+    height: 0;
+
+    th {
+      padding-top: 22px;
+      padding-bottom: 22px;
+    }
+
+    td {
+      padding-top: 22px;
+      padding-bottom: 22px;
+    }
+  }
+}

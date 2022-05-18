@@ -1,0 +1,146 @@
+.sms-request-container {
+  width: 100%;
+  height: 50px;
+
+  .sms-input-wrapper {
+    width: 220px;
+    height: 100%;
+    border-radius: 25px;
+    border: 1px solid #d8d8d8;
+    display: inline-flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    transition: 0.2s;
+    vertical-align: middle;
+
+    &.invalid {
+      border-color: #ea4c36;
+    }
+
+    &:focus-within,
+    &:hover {
+      border-color: #bfbebe;
+    }
+
+    &.loading {
+      animation: tick linear;
+      animation-duration: 1s;
+    }
+
+    .sms-input {
+      align-self: center;
+      position: relative;
+      width: 140px;
+      height: 80%;
+      display: flex;
+
+      p {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-self: center;
+        position: absolute;
+        color: #393939;
+        font-size: 12px;
+        z-index: 60;
+      }
+
+      input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        outline: none;
+        border: 0;
+        background: 0;
+        color: transparent;
+        opacity: 0;
+        z-index: 50;
+      }
+
+      .code {
+        align-self: center;
+        width: 100%;
+        margin-left: 40px;
+        display: flex;
+        justify-content: space-between;
+
+        h4 {
+          align-self: center;
+          width: 18px;
+          height: 18px;
+          font-size: 12px;
+          color: #3d3d3d;
+          border-bottom: 2px solid #b5b4b4;
+          text-align: center;
+
+          &:empty {
+            height: 2px;
+            border-color: #d2d2d2;
+          }
+        }
+      }
+
+      input:focus + .code h4.focused {
+        border-color: #0061af;
+        animation: tick 1s linear infinite;
+      }
+
+      input:focus + .code h4.finished {
+        border-color: #0061af;
+        animation: none;
+      }
+    }
+
+    button {
+      align-self: center;
+      width: 15px;
+      height: 15px;
+      background-color: #fff;
+      background-image: url("../../../../assets/images/icons/clear.svg");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      outline: none;
+      border: 0;
+      transition: 0.2s;
+    }
+  }
+
+  .countdown {
+    display: inline-block;
+    width: calc(100% - 220px - 15px);
+    align-self: center;
+    margin-left: 15px;
+    vertical-align: middle;
+
+    h2 {
+      color: #616161;
+      font-size: 10px;
+
+      span {
+        color: #0061af;
+      }
+
+      &.blue {
+        cursor: pointer;
+        font-size: 12px;
+        color: #0061af;
+      }
+    }
+  }
+}
+
+@keyframes tick {
+  0% {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #0061af;
+  }
+  100% {
+    border-color: transparent;
+  }
+}

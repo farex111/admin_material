@@ -4,10 +4,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 
   .auth-container {
     width: 400px;
     align-self: center;
+    position: relative;
+    animation: anime 1s ease-in-out;
 
     .login-form {
       display: grid;
@@ -35,5 +38,16 @@
         }
       }
     }
+  }
+}
+
+@keyframes anime {
+  from {
+    opacity: 0;
+    top: 300px;
+  }
+  to {
+    opacity: 1;
+    top: 0;
   }
 }

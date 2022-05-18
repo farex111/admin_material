@@ -1,1 +1,3 @@
-<p>loading works!</p>
+<div class="overlay" *ngIf="loading$ | async">
+  <mat-spinner color="accent"></mat-spinner>
+</div>

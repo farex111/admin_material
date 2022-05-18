@@ -1,0 +1,50 @@
+.face-recognition-page {
+  padding: 20px 0;
+
+  form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+
+    mat-form-field {
+      margin-right: 10px;
+
+      mat-icon {
+        color: #0000008a;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .table-wrapper {
+    height: 460px;
+    border-radius: 10px;
+    overflow: auto;
+    table {
+      width: 100%;
+
+      tr {
+        height: 0;
+        text-align: center;
+
+        th {
+          padding-top: 22px;
+          padding-bottom: 22px;
+          text-align: center;
+        }
+
+        td {
+          padding-top: 22px;
+          padding-bottom: 22px;
+          button {
+            img {
+              width: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+}

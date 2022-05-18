@@ -1,1 +1,53 @@
-<p>register-admin works!</p>
+<div class="register-admin">
+  <h2>ახალი ადმინის რეგისტრაცია და დამატება</h2>
+  <div class="form-container">
+    <form autocomplete="off" [formGroup]="registerForm">
+
+      <!--Username-->
+      <mat-form-field appearance="outline">
+        <mat-label>მომხმარებლის სახელი</mat-label>
+        <input matInput placeholder="Admin" formControlName="userName">
+        <mat-icon matPrefix>person_outline</mat-icon>
+        <mat-error *ngIf="registerForm.hasError('required', 'userName')">შეიყვანეთ მომხმარებლის სახელი</mat-error>
+      </mat-form-field>
+
+      <!--User First Name-->
+      <mat-form-field appearance="outline">
+        <mat-label>სახელი</mat-label>
+        <input matInput placeholder="გიორგი" formControlName="firstName">
+        <mat-icon matPrefix>person_outline</mat-icon>
+        <mat-error *ngIf="registerForm.hasError('required', 'firstName')">შეიყვანეთ სახელი</mat-error>
+        <mat-error *ngIf="registerForm.hasError('pattern', 'firstName')">შეიყვანეთ ქართული სიმბოლოები</mat-error>
+      </mat-form-field>
+
+      <!--User Last Name-->
+      <mat-form-field appearance="outline">
+        <mat-label>გვარი</mat-label>
+        <input matInput placeholder="კვარაცხელია" formControlName="lastName">
+        <mat-icon matPrefix>person_outline</mat-icon>
+        <mat-error *ngIf="registerForm.hasError('required', 'lastName')">შეიყვანეთ გვარი</mat-error>
+        <mat-error *ngIf="registerForm.hasError('pattern', 'lastName')">შეიყვანეთ ქართული სიმბოლოები</mat-error>
+      </mat-form-field>
+
+      <!--User Personal Number-->
+      <mat-form-field appearance="outline">
+        <mat-label>პირადი ნომერი</mat-label>
+        <input maxlength="11" matInput placeholder="52001022456" formControlName="personalId">
+        <mat-icon matPrefix>credit_card</mat-icon>
+        <mat-error *ngIf="registerForm.hasError('required', 'personalId')">შეიყვანეთ პირადი ნომერი</mat-error>
+        <mat-error *ngIf="registerForm.hasError('pattern', 'personalId')">შეიყვანეთ მხოლოდ ციფრები</mat-error>
+        <mat-error *ngIf="registerForm.hasError('minlength', 'personalId')">შეიყვანეთ მინიმუმ 11 სიმბოლო</mat-error>
+      </mat-form-field>
+
+      <!--Mobile-->
+      <mat-form-field appearance="outline">
+        <mat-label>მობილურის ნომერი</mat-label>
+        <input matInput placeholder="593-123-456" formControlName="phone">
+        <mat-icon matPrefix>phone_iphone</mat-icon>
+        <mat-error *ngIf="registerForm.hasError('required', 'phone')">შეიყვანეთ მობილურის ნომერი</mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="submitForm()" [disabled]="registerForm.invalid">დამატება</button>
+    </form>
+  </div>
+</div>

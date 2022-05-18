@@ -1,1 +1,57 @@
-<p>add-role-to-admin works!</p>
+<div class="container">
+  <table mat-table [dataSource]="dataSource" #table>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> სახელი და გვარი</th>
+      <td mat-cell *matCellDef="let element"> {{ element.firstName}} {{element.lastName}} </td>
+    </ng-container>
+
+    <!-- userName Column -->
+    <ng-container matColumnDef="userName">
+      <th mat-header-cell *matHeaderCellDef> მომხმარებლის სახელი</th>
+      <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+    </ng-container>
+
+    <!-- Role Column -->
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef> როლი</th>
+      <td mat-cell *matCellDef="let element">
+        <p *ngIf="element.connectedRoles && element.connectedRoles.length">
+          {{element.connectedRoles[0].name}}
+        </p>
+        <p *ngIf="!element.connectedRoles || !element.connectedRoles.length">
+          როლი არ აქვს
+        </p>
+      </td>
+    </ng-container>
+
+    <!-- Role Change Column -->
+    <ng-container matColumnDef="role-change">
+      <th mat-header-cell *matHeaderCellDef> როლის შეცვლა</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button color="primary" [hoverColor]="'red'" (click)="onAddRole(element)">
+          <mat-icon>cached</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Send Password Column -->
+    <ng-container matColumnDef="reset-password">
+      <th mat-header-cell *matHeaderCellDef> პაროლის გაგზავნა</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button color="primary" (click)="submitAdminNewPassword(element)">პაროლის გაგზვნა</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20, 50, 100]"
+                 [pageSize]="5"
+                 (click)="scrollToTop()"
+                 showFirstLastButtons>
+  </mat-paginator>
+
+</div>

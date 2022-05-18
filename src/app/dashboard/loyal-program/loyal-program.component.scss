@@ -1,0 +1,36 @@
+.loyal-program-page {
+  padding: 15px;
+  height: 610px;
+  overflow: auto;
+  h2 {
+    color: #0061AF;
+    padding: 0 16px;
+  }
+
+  .upload-file-table {
+    .header {
+      display: flex;
+      align-items: center;
+    }
+    table {
+      width: 100%;
+      .textCenter {
+        text-align: center;
+      }
+
+      tr {
+        height: 0;
+
+        th {
+          padding-top: 22px;
+          padding-bottom: 22px;
+        }
+
+        td {
+          padding-top: 22px;
+          padding-bottom: 22px;
+        }
+      }
+    }
+  }
+}

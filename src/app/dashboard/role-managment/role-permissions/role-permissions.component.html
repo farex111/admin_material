@@ -1,1 +1,52 @@
-<p>role-permissions works!</p>
+<div class="role-container">
+  <div class="role-list">
+    <header>
+      <h2>როლები</h2>
+    </header>
+
+    <!--Role List-->
+    <mat-selection-list #roles [multiple]="false">
+      <mat-list-option *ngFor="let role of roles$ | async" [value]="role" (click)="pickRole(role)">
+        <p>{{role.name }}</p>
+      </mat-list-option>
+      <mat-list-option class="add-role" (click)="addNewRole()">
+        <p mat-line>როლის დამატება</p>
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+
+  <div class="role-description" *ngIf="permissions$ | async as permissions">
+    <h3 *ngIf="permissions.length === 0">ამ როლს არ აქვს უფლებები</h3>
+    <h2 *ngIf="pickedRole">{{pickedRole.name}}</h2>
+
+    <mat-list>
+
+      <!--Permissions List-->
+      <ng-container *ngIf="permissions.length > 0">
+        <mat-list-item *ngFor="let permission of permissions">
+          <p mat-line>{{permission.alias }}</p>
+          <button mat-icon-button color="warn" (click)="deletePermission(pickedRole.id, permission)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-list-item>
+      </ng-container>
+
+      <!--Add New Permission-->
+      <mat-list-item class="add-permission">
+        <p mat-line> ახალი უფლების დამატება</p>
+        <button mat-icon-button (click)="addPermissionsToRole(permissions, pickedRole.id)">
+          <mat-icon>add_box</mat-icon>
+        </button>
+      </mat-list-item>
+
+      <!--Delete Role-->
+      <mat-list-item class="delete-role">
+        <p mat-line>როლის წაშლა</p>
+        <button mat-icon-button (click)="deleteRole(pickedRole.id)" >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</div>
+

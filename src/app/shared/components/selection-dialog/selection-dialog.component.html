@@ -1,8 +1,8 @@
 <div class="container">
-  <h1 mat-dialog-title>{{data.firstName}} {{data.lastName}}</h1>
+  <h1 mat-dialog-title>{{data.title}}</h1>
   <div mat-dialog-content>
-    <p>ახლანდელი როლი: {{data.role}}</p>
-    <mat-form-field appearance="outline">
+    <p *ngIf="data.role">ახლანდელი როლი: {{data.role}}</p>
+    <mat-form-field appearance="outline" *ngIf="data.roles">
       <mat-label>აირჩიეთ როლი</mat-label>
       <mat-select [(ngModel)]="selectedValue" name="food">
         <mat-option *ngFor="let role of data.roles" [value]="role.id">
@@ -10,9 +10,18 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+
+    <mat-form-field appearance="outline" *ngIf="data.reasons">
+      <mat-label>აირჩიეთ დაბლოკვის მიზეზი</mat-label>
+      <mat-select [(ngModel)]="selectedValue" name="food">
+        <mat-option *ngFor="let reason of data.reasons" [value]="reason">
+          {{reason}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
   <div mat-dialog-actions [align]="'center'">
-    <button mat-button color="warn" (click)="onNoClick()">უარყოფა</button>
+    <button mat-button color="warn" [mat-dialog-close]="false">უარყოფა</button>
     <button mat-raised-button color="primary" [mat-dialog-close]="selectedValue" cdkFocusInitial>დადასტურება</button>
   </div>
 

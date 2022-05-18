@@ -13,8 +13,8 @@ export class SelectionDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<SelectionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {
       roles: Role[],
-      firstName: string,
-      lastName: string,
+      reasons: string[],
+      title: string,
       role: string,
     },
   ) {}
