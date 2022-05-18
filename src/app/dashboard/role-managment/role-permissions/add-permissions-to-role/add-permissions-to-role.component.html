@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="header">
+    <h1 mat-dialog-title>ახალი უფლების დამატება</h1>
+    <button mat-icon-button [mat-dialog-close]="false">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-form-field appearance="outline">
+    <mat-label>უფლებების ფილტრი</mat-label>
+    <input matInput placeholder="Delete User" autocomplete="off" [(ngModel)]="search">
+  </mat-form-field>
+
+  <mat-selection-list [(ngModel)]="selectedPermissions">
+    <mat-list-option *ngFor="let permission of data.permissions | searchPermission:search" [value]="permission">
+      {{permission.alias}}
+    </mat-list-option>
+  </mat-selection-list>
+
+  <div mat-dialog-actions class="buttons" [align]="'end'">
+    <button mat-button color="warn" [mat-dialog-close]="false">უარყოფა</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="submitResult()">დამახსოვრება</button>
+  </div>
+</div>

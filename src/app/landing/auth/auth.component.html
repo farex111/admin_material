@@ -1,0 +1,24 @@
+<div class="auth-page">
+  <div class="auth-container">
+    <form class="login-form" autocomplete="off" [formGroup]="authorizationForm">
+      <img class="logo" src="../../../assets/images/logo.svg" alt="" />
+
+      <mat-form-field appearance="outline">
+        <mat-label>მომხმარებელი</mat-label>
+        <input matInput formControlName="userName" >
+        <mat-icon matPrefix><img src="../../../assets/images/icons/person.svg" alt=""></mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>პაროლი</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+        <span mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </span>
+        <mat-icon matPrefix><img src="../../../assets/images/icons/lock.svg" alt=""></mat-icon>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="submitForm()">Login</button>
+    </form>
+  </div>
+</div>
