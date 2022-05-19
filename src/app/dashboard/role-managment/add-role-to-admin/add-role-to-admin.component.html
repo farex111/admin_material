@@ -40,7 +40,9 @@
     <ng-container matColumnDef="reset-password">
       <th mat-header-cell *matHeaderCellDef> პაროლის გაგზავნა</th>
       <td mat-cell *matCellDef="let element">
-        <button mat-raised-button color="primary" (click)="submitAdminNewPassword(element)">პაროლის გაგზვნა</button>
+        <ng-container *userHasPermission="['All','Permissions.GenerateAdminPassword']">
+          <button mat-raised-button color="primary" (click)="submitAdminNewPassword(element)">პაროლის გაგზვნა</button>
+        </ng-container>
       </td>
     </ng-container>
 
