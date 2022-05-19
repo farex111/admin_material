@@ -104,4 +104,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
         }
       })
   }
+
+  changeBackgroundPhoto(): string {
+    if (this.changePassForm.invalid && this.changePassForm.touched) {
+      return 'url(../../../assets/images/icons/password-red.svg)'
+    } else {
+      return 'url(../../../assets/images/icons/password-blue.svg)'
+    }
+  }
 }

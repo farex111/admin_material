@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {AddRoleToAdminService} from "./add-role-to-admin.service";
 import {AdminUser, AdminUsersModel} from "../../../shared/models/get-admin-users.model";
@@ -7,8 +7,6 @@ import {DialogComponent} from "../../../shared/components/dialog/dialog.componen
 import {GetRolesModel} from "../../../shared/models/get-roles.model";
 import {RolePermissionsService} from "../role-permissions/role-permissions.service";
 import {SelectionDialogComponent} from "../../../shared/components/selection-dialog/selection-dialog.component";
-import {MatPaginator} from "@angular/material/paginator";
-import {MatTableDataSource} from "@angular/material/table";
 import {LoadingService} from "../../../shared/services/loading.service";
 import {GenerateAdminPasswordModel} from "../../../shared/models/generate-admin-password.model";
 
@@ -19,15 +17,14 @@ import {GenerateAdminPasswordModel} from "../../../shared/models/generate-admin-
 })
 export class AddRoleToAdminComponent implements OnInit, OnDestroy {
   loading: boolean = false;
+  displayedColumns: string[] = ['name', 'userName', 'role', 'role-change', 'reset-password'];
+  dataSource!: AdminUser[];
+
   adminUsersSub!: Subscription;
   generateNewPassword!: Subscription;
   rolesSub!: Subscription;
   updateRoleSub!: Subscription;
-  displayedColumns: string[] = ['name', 'userName', 'role', 'role-change', 'reset-password'];
-  dataSource!: MatTableDataSource<AdminUser>;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild('table', {read: ElementRef}) table!: ElementRef;
 
   constructor(
     private addRoleToAdminService: AddRoleToAdminService,
@@ -38,12 +35,7 @@ export class AddRoleToAdminComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.loadingService.start();
-    this.adminUsersSub = this.addRoleToAdminService.fetchAdminUsers().subscribe((res: AdminUsersModel) => {
-      this.loadingService.stop();
-      this.dataSource = new MatTableDataSource<AdminUser>(res.data);
-      this.dataSource.paginator = this.paginator;
-    })
+    this.fetchAdminUsers();
   }
 
   ngOnDestroy(): void {
@@ -59,6 +51,14 @@ export class AddRoleToAdminComponent implements OnInit, OnDestroy {
     if (this.updateRoleSub) {
       this.updateRoleSub.unsubscribe();
     }
+  }
+
+  fetchAdminUsers() {
+    this.loadingService.start();
+    this.adminUsersSub = this.addRoleToAdminService.fetchAdminUsers().subscribe((res: AdminUsersModel) => {
+      this.loadingService.stop();
+      this.dataSource = res.data
+    })
   }
 
   submitAdminNewPassword(admin: AdminUser) {
@@ -92,6 +92,7 @@ export class AddRoleToAdminComponent implements OnInit, OnDestroy {
   }
 
   onAddRole(role: AdminUser) {
+    console.log(role)
     this.loadingService.start();
     this.rolesSub = this.rolePermissionsService.getAllRoles().subscribe((res: GetRolesModel) => {
       this.loadingService.stop();
@@ -102,36 +103,41 @@ export class AddRoleToAdminComponent implements OnInit, OnDestroy {
           data: {
             roles: res.data,
             title: `${role.firstName} ${role.lastName}`,
-            role: role.connectedRoles[0].name
+            role: role.connectedRoles[0]?.name
           }
         }).afterClosed().subscribe((res: number) => {
-          this.loadingService.start();
-          this.updateRoleSub = this.addRoleToAdminService.addRoleToUser(role.id, res).subscribe((res: any) => {
-            this.loadingService.stop();
-            if (res.errorCode) {
-              this.dialog.open(DialogComponent, {
-                width: '30%',
-                restoreFocus: false,
-                data: {
-                  title: 'შეცდომა',
-                  content: res.message,
-                  cancelText: 'დახურვა',
-                  warning: true
-                }
-              });
-            } else {
-              this.dialog.open(DialogComponent, {
-                width: '30%',
-                restoreFocus: false,
-                data: {
-                  title: 'წარმატება',
-                  content: 'როლი წარმატებით შეიცვალა',
-                  cancelText: 'დახურვა',
-                  success: true
-                }
-              })
-            }
-          })
+          if (res) {
+            this.loadingService.start();
+            this.updateRoleSub = this.addRoleToAdminService.addRoleToUser(role.id, res).subscribe((res: any) => {
+              this.loadingService.stop();
+              if (res.errorCode) {
+                this.dialog.open(DialogComponent, {
+                  width: '30%',
+                  restoreFocus: false,
+                  data: {
+                    title: 'შეცდომა',
+                    content: res.message,
+                    cancelText: 'დახურვა',
+                    warning: true
+                  }
+                });
+              } else {
+                this.dialog.open(DialogComponent, {
+                  width: '30%',
+                  restoreFocus: false,
+                  data: {
+                    title: 'წარმატება',
+                    content: 'როლი წარმატებით შეიცვალა',
+                    cancelText: 'დახურვა',
+                    success: true
+                  }
+                })
+                this.fetchAdminUsers();
+              }
+            })
+          } else {
+            this.fetchAdminUsers();
+          }
         })
       } else {
         this.dialog.open(DialogComponent, {
@@ -146,9 +152,5 @@ export class AddRoleToAdminComponent implements OnInit, OnDestroy {
         })
       }
     })
-  }
-
-  scrollToTop() {
-    this.table.nativeElement.scrollIntoView({behavior: "smooth", block: "start", inline: "start"});
   }
 }

@@ -19,6 +19,10 @@
       td {
         padding-top: 22px;
         padding-bottom: 22px;
+
+        .has-no-role {
+          color: red;
+        }
       }
     }
   }

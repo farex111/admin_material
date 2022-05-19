@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {RegisterAdminService} from "./register-admin.service";
@@ -13,8 +13,9 @@ import {AddNewAdminModel} from "../../../shared/models/add-new-admin.model";
   styleUrls: ['./register-admin.component.scss']
 })
 export class RegisterAdminComponent implements OnInit, OnDestroy {
-  indexNumbers: number [] = [514, 551, 555, 557, 558, 568, 570, 571, 574, 577, 578, 579, 591, 592, 593, 595, 596, 597, 598, 599];
+  indexNumbers: Array<number> = [514, 551, 555, 557, 558, 568, 570, 571, 574, 577, 578, 579, 591, 592, 593, 595, 596, 597, 598, 599];
   myPattern: string = "^";
+  tab: string = '';
   loading: boolean = false;
   registerForm!: FormGroup;
   addAdminUserSub!: Subscription;

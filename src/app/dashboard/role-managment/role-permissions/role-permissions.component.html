@@ -9,7 +9,7 @@
       <mat-list-option *ngFor="let role of roles" [selected]="pickedRole.id === role.id" [value]="role" (click)="pickRole(role)">
         <p>{{role.name }}</p>
       </mat-list-option>
-      <mat-list-option class="add-role" (click)="addNewRole()">
+      <mat-list-option class="add-role" (click)="openAddNewRoleDialog()">
         <p mat-line>როლის დამატება</p>
       </mat-list-option>
     </mat-selection-list>
@@ -20,7 +20,6 @@
     <h2 *ngIf="pickedRole">{{pickedRole.name}}</h2>
 
     <mat-list>
-
       <!--Permissions List-->
       <ng-container *ngIf="pickedRole?.id">
         <mat-list-item *ngFor="let permission of permissions">

@@ -111,7 +111,7 @@ export class RolePermissionsComponent implements OnInit, OnDestroy {
     })
   }
 
-  addNewRole() {
+  openAddNewRoleDialog() {
     this.loadingService.start();
     this.rolePermissionsService.getPermissions().subscribe((res: GetPermissionsModel) => {
       this.loadingService.stop();
@@ -124,10 +124,12 @@ export class RolePermissionsComponent implements OnInit, OnDestroy {
           permissions: res.data
         }
       }).afterClosed().subscribe((res: any) => {
-        this.loadingService.start();
-        if (res.roleName) {
-          this.addNewRoleSub = this.rolePermissionsService.addRole(res.roleName).subscribe((res: AddRoleModel) => {
+        let permissionsIdArray: number[] = res.data.map((permissions: any) => permissions.id)
+        if (res) {
+          this.loadingService.start();
+          this.addNewRoleSub = this.rolePermissionsService.addRole(res.roleName).subscribe((newRole: AddRoleModel) => {
             this.loadingService.stop();
+            this.addPermissionToRole(newRole.data, permissionsIdArray);
             this.getAllRoles();
             if (res.errorCode) {
               this.dialog.open(DialogComponent, {
@@ -142,7 +144,8 @@ export class RolePermissionsComponent implements OnInit, OnDestroy {
               });
             }
           });
-        } else {
+        }
+        else {
           this.getAllRoles();
         }
       });

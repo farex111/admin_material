@@ -1,5 +1,5 @@
 <div class="container">
-  <table mat-table [dataSource]="dataSource" #table>
+  <table mat-table [dataSource]="dataSource">
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
@@ -20,7 +20,7 @@
         <p *ngIf="element.connectedRoles && element.connectedRoles.length">
           {{element.connectedRoles[0].name}}
         </p>
-        <p *ngIf="!element.connectedRoles || !element.connectedRoles.length">
+        <p *ngIf="!element.connectedRoles || !element.connectedRoles.length" class="has-no-role">
           როლი არ აქვს
         </p>
       </td>
@@ -47,11 +47,5 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-
-  <mat-paginator [pageSizeOptions]="[5, 10, 20, 50, 100]"
-                 [pageSize]="5"
-                 (click)="scrollToTop()"
-                 showFirstLastButtons>
-  </mat-paginator>
 
 </div>

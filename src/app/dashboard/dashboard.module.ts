@@ -25,11 +25,11 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {FaceRecognitionComponent} from './face-recognition/face-recognition.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
-import { LoyalProgramComponent } from './loyal-program/loyal-program.component';
-import { AddNewRoleComponent } from './role-managment/role-permissions/add-new-role/add-new-role.component';
-import { ShowFileComponent } from './loyal-program/show-file/show-file.component';
-import { MessagingComponent } from './messaging/messaging.component';
-import { AddPermissionsToRoleComponent } from './role-managment/role-permissions/add-permissions-to-role/add-permissions-to-role.component';
+import {LoyalProgramComponent} from './loyal-program/loyal-program.component';
+import {AddNewRoleComponent} from './role-managment/role-permissions/add-new-role/add-new-role.component';
+import {ShowFileComponent} from './loyal-program/show-file/show-file.component';
+import {MessagingComponent} from './messaging/messaging.component';
+import {AddPermissionsToRoleComponent} from './role-managment/role-permissions/add-permissions-to-role/add-permissions-to-role.component';
 
 
 @NgModule({
@@ -48,27 +48,27 @@ import { AddPermissionsToRoleComponent } from './role-managment/role-permissions
     MessagingComponent,
     AddPermissionsToRoleComponent,
   ],
-    imports: [
-        CommonModule,
-        DashboardRoutingModule,
-        MatButtonModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        SharedModule,
-        MatTooltipModule,
-        MatCardModule,
-        MatProgressSpinnerModule,
-        MatDialogModule,
-        MatListModule,
-        MatTabsModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        FormsModule
-    ]
+  imports: [
+    CommonModule,
+    DashboardRoutingModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    SharedModule,
+    MatTooltipModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatListModule,
+    MatTabsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    FormsModule
+  ]
 })
 export class DashboardModule {
 }

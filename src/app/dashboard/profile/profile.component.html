@@ -31,10 +31,7 @@
       </mat-list>
     </div>
   </div>
-  <div class="right-section"
-       [ngStyle]="{'background-image' : changePassForm.invalid && changePassForm.touched
-       ? 'url(../../../assets/images/icons/password-red.svg)'
-       : 'url(../../../assets/images/icons/password-blue.svg)'}">
+  <div class="right-section" [ngStyle]="{'background-image' : changeBackgroundPhoto()}">
     <h2 mat-subheader>პაროლის შეცვლა</h2>
     <div class="wrapper">
       <form autocomplete="off" [formGroup]="changePassForm">
@@ -88,7 +85,8 @@
           </mat-error>
         </mat-form-field>
 
-        <button mat-raised-button color="primary" [disabled]="changePassForm.invalid" (click)="onSubmit()">შეცვლა</button>
+        <button mat-raised-button color="primary" [disabled]="changePassForm.invalid" (click)="onSubmit()">შეცვლა
+        </button>
       </form>
     </div>
   </div>
