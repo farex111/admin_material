@@ -26,7 +26,7 @@ export class HasPermissionDirective implements OnInit {
   }
 
   getPermissionList() {
-    this.userDataSub = this.userService.permissions.subscribe((res: Array<string>) => {
+    this.userDataSub = this.userService.permissions.subscribe((res: string[]) => {
       this.permissions = res;
       if (this.permissions !== undefined) {
         if (this.userHasPermission[0] === 'All') {
@@ -48,7 +48,10 @@ export class HasPermissionDirective implements OnInit {
     });
   }
 
-  hasAll(permissionArray: Array<string>, neededPermissionsArray: Array<string>) {
+  hasAll(
+    permissionArray: Array<string>,
+    neededPermissionsArray: Array<string>
+  ) {
     let hasAllPermission = true;
     let j = 1;
     while (hasAllPermission && j < neededPermissionsArray.length) {
@@ -61,7 +64,10 @@ export class HasPermissionDirective implements OnInit {
     return hasAllPermission;
   }
 
-  hasAny(permissionArray: Array<string>, neededPermissionsArray: Array<string>) {
+  hasAny(
+    permissionArray: Array<string>,
+    neededPermissionsArray: Array<string>
+  ) {
     let hasAnyPermission = false;
     let j = 1;
     while (!hasAnyPermission && j < neededPermissionsArray.length) {

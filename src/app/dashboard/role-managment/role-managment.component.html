@@ -4,12 +4,12 @@
       <app-role-permissions></app-role-permissions>
     </ng-template>
   </mat-tab>
-  <mat-tab label="ახალი ადმინის რეგისტრაცია">
+  <mat-tab label="ახალი ადმინის რეგისტრაცია"  *userHasPermission="['All','Permissions.AddAdminUser']">
     <ng-template matTabContent>
       <app-register-admin></app-register-admin>
     </ng-template>
   </mat-tab>
-  <mat-tab label="ადმინზე როლის მიბმა">
+  <mat-tab label="ადმინზე როლის მიბმა"  *userHasPermission="['All','Permissions.GetAdminUsersPermission']">
     <ng-template matTabContent>
       <app-add-role-to-admin></app-add-role-to-admin>
     </ng-template>

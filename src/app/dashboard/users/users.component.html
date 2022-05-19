@@ -43,16 +43,25 @@
           <td><mat-icon color="primary" *ngIf="user.isSystemBlocked">check</mat-icon></td>
           <td><mat-icon color="primary" *ngIf="user.isBlocked">check</mat-icon></td>
           <td>
-            <ng-container>
-              <button *ngIf="!user.isSystemBlocked" mat-icon-button matTooltip="პაროლის გენერაცია" (click)="generateNewPassword(user)">
-                <mat-icon class="reset_password">rotate_left</mat-icon>
-              </button>
-              <button *ngIf="!user.isSystemBlocked" mat-icon-button matTooltip="მომხმარებლის დაბლოკვა" (click)="blockSsoUser(user.id)">
-                <mat-icon color="primary">lock</mat-icon>
-              </button>
-              <button *ngIf="user.isSystemBlocked" mat-icon-button matTooltip="მომხმარებლის განბლოკვა" (click)="unblockSsoUser(user)">
-                <mat-icon color="primary">lock_open</mat-icon>
-              </button>
+            <ng-container >
+              <ng-container *userHasPermission="['All', 'Permissions.GenerateNewPassword']">
+                <button *ngIf="!user.isSystemBlocked" mat-icon-button matTooltip="პაროლის გენერაცია"
+                        (click)="generateNewPassword(user)">
+                  <mat-icon class="reset_password">rotate_left</mat-icon>
+                </button>
+              </ng-container>
+              <ng-container *userHasPermission="['All', 'Permissions.BlockUser']">
+                <button *ngIf="!user.isSystemBlocked" mat-icon-button matTooltip="მომხმარებლის დაბლოკვა"
+                        (click)="blockSsoUser(user.id)">
+                  <mat-icon color="primary">lock</mat-icon>
+                </button>
+              </ng-container>
+              <ng-container *userHasPermission="['All', 'Permissions.UnblockUser']">
+                <button *ngIf="user.isSystemBlocked" mat-icon-button matTooltip="მომხმარებლის განბლოკვა"
+                        (click)="unblockSsoUser(user)">
+                  <mat-icon color="primary">lock_open</mat-icon>
+                </button>
+              </ng-container>
             </ng-container>
           </td>
         </tr>
@@ -81,12 +90,18 @@
             <td></td>
             <td>
               <ng-container *ngIf="user.isSSO">
-                <button *ngIf="company.active" mat-icon-button matTooltip="კომპანიის დაბლოკვა" (click)="blockCompany(user.id, company.companyId)">
-                  <mat-icon color="primary">lock</mat-icon>
-                </button>
-                <button *ngIf="!company.active" mat-icon-button matTooltip="კომპანიის განბლოკვა" (click)="unblockCompany(user.id, company.companyId, user)">
-                  <mat-icon color="primary">lock_open</mat-icon>
-                </button>
+                <ng-container  *userHasPermission="['All', 'Permissions.BlockUser']">
+                  <button *ngIf="company.active" mat-icon-button matTooltip="კომპანიის დაბლოკვა"
+                          (click)="blockCompany(user.id, company.companyId)">
+                    <mat-icon color="primary">lock</mat-icon>
+                  </button>
+                </ng-container>
+                <ng-container *userHasPermission="['All', 'Permissions.UnblockUser']">
+                  <button *ngIf="!company.active" mat-icon-button matTooltip="კომპანიის განბლოკვა"
+                          (click)="unblockCompany(user.id, company.companyId, user)">
+                    <mat-icon color="primary">lock_open</mat-icon>
+                  </button>
+                </ng-container>
               </ng-container>
             </td>
           </tr>

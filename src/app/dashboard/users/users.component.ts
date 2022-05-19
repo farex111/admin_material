@@ -80,8 +80,9 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.fetchAdminUserInfo();
     this.initializeForm();
     this.userPermissionSub = this.userService.permissions.subscribe((res: string[]) => {
+      console.log(res)
       if (res !== undefined) {
-        if (res.includes('Permissions.SearchUser')) {
+        if (!res.includes('Permissions.SearchUser')) {
           this.router.navigate(['role-management'])
         }
       }

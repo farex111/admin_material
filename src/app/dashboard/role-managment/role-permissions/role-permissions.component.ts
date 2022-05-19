@@ -144,8 +144,7 @@ export class RolePermissionsComponent implements OnInit, OnDestroy {
               });
             }
           });
-        }
-        else {
+        } else {
           this.getAllRoles();
         }
       });
@@ -189,10 +188,14 @@ export class RolePermissionsComponent implements OnInit, OnDestroy {
           permissions: temp
         }
       }).afterClosed().subscribe((res: Permission[]) => {
-        const mappedTemp = res.map((x: Permission) => x.id);
-        const oldPermissions = rolePermissions.map((x: Permission) => x.id);
-        const newPermissions = [...oldPermissions, ...mappedTemp];
-        this.addPermissionToRole(roleId, newPermissions)
+        if (res) {
+          const mappedTemp = res.map((x: Permission) => x.id);
+          const oldPermissions = rolePermissions.map((x: Permission) => x.id);
+          const newPermissions = [...oldPermissions, ...mappedTemp];
+          this.addPermissionToRole(roleId, newPermissions)
+        } else {
+          this.getPermissions(roleId)
+        }
       });
     });
   }
