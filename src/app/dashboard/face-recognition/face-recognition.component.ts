@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FaceRecognitionService} from "./face-recognition.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../shared/services/user.service";
@@ -7,7 +7,6 @@ import {Router} from "@angular/router";
 import {FaceRecognition, FaceRecognitionModel} from "../../shared/models/face-recognition.model";
 import {LoadTypeEnum} from "../../shared/enums/load-type.enum";
 import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
 import {LoadingService} from "../../shared/services/loading.service";
 
 @Component({
@@ -28,7 +27,6 @@ export class FaceRecognitionComponent implements OnInit, OnDestroy {
 
   displayedColumns: string[] = ['personalId', 'name', 'loanType', 'docNumber', 'matchLevel', 'success', 'date', 'images'];
   dataSource!: MatTableDataSource<FaceRecognition>;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   userSub!: Subscription;
   faceRecognitionSub!: Subscription;
@@ -106,7 +104,6 @@ export class FaceRecognitionComponent implements OnInit, OnDestroy {
       .subscribe((res: FaceRecognitionModel) => {
         this.loadingService.stop();
         this.dataSource = new MatTableDataSource<FaceRecognition>(res.data.faceRecognitionList);
-        this.dataSource.paginator = this.paginator;
         this.pageCount = res.data.pageCount;
         this.pageNumber = pageNumber;
       })

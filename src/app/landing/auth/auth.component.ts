@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {LandingService} from "../landing.service";
@@ -18,6 +18,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   hide: boolean = true;
   authorizationForm!: FormGroup;
   authorizeUserSub!: Subscription;
+  className!: string;
 
   constructor(
     private fb: FormBuilder,
@@ -29,8 +30,14 @@ export class AuthComponent implements OnInit, OnDestroy {
   ) {
   }
 
+  @ViewChild('container') container!: any;
+
   ngOnInit(): void {
     this.initializeForm();
+
+    setTimeout(() => {
+      this.container.nativeElement.classList.add('hover-effect')
+    }, 300)
   }
 
   ngOnDestroy(): void {

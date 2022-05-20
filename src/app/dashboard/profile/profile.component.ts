@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   newPassHide: boolean = true;
   repeatPassHide: boolean = true;
   userData!: UserModel1;
-  userDataSub!: Subscription;
+
   changePassFormSub!: Subscription;
   changePassForm!: FormGroup;
 
