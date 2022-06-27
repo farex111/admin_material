@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="header">
+    <h2>შეტყობინების გაგზავნა</h2>
+  </div>
+
+  <div class="content">
+    <form autocomplete="off">
+      <mat-form-field appearance="outline">
+        <mat-label>ადრესატი</mat-label>
+        <input matInput placeholder="Placeholder">
+        <mat-icon matSuffix>account_circle</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>სათაური</mat-label>
+        <input matInput placeholder="Placeholder">
+        <mat-icon matSuffix> mail_outline</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>შეტყობინება</mat-label>
+        <textarea matInput placeholder="მაქსიმუმ 1500 სიმბოლო"></textarea>
+        <button matSuffix mat-icon-button color="primary"><mat-icon>attach_file</mat-icon></button>
+      </mat-form-field>
+    </form>
+  </div>
+
+  <div mat-dialog-actions class="buttons" [align]="'end'">
+    <button mat-button color="warn" [mat-dialog-close]="false">დახურვა</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="true">გაგზავნა</button>
+  </div>
+</div>

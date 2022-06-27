@@ -30,6 +30,18 @@ import {AddNewRoleComponent} from './role-managment/role-permissions/add-new-rol
 import {ShowFileComponent} from './loyal-program/show-file/show-file.component';
 import {MessagingComponent} from './messaging/messaging.component';
 import {AddPermissionsToRoleComponent} from './role-managment/role-permissions/add-permissions-to-role/add-permissions-to-role.component';
+import { SearchComponent } from './messaging/search/search.component';
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import { CreateComponent } from './messaging/create/create.component';
+import { ComposeComponent } from './messaging/create/compose/compose.component';
+import { PushNotificationsComponent } from './push-notifications/push-notifications.component';
+import { HistoryComponent } from './push-notifications/history/history.component';
+import { SavedComponent } from './push-notifications/saved/saved.component';
+import { NewNotificationComponent } from './push-notifications/new-notification/new-notification.component';
+import {MatStepperModule} from "@angular/material/stepper";
+import {MatRadioModule} from "@angular/material/radio";
+import { EditNotificationComponent } from './push-notifications/saved/edit-notification/edit-notification.component';
+import {MatSelectModule} from "@angular/material/select";
 
 
 @NgModule({
@@ -47,28 +59,40 @@ import {AddPermissionsToRoleComponent} from './role-managment/role-permissions/a
     ShowFileComponent,
     MessagingComponent,
     AddPermissionsToRoleComponent,
+    SearchComponent,
+    CreateComponent,
+    ComposeComponent,
+    PushNotificationsComponent,
+    HistoryComponent,
+    SavedComponent,
+    NewNotificationComponent,
+    EditNotificationComponent,
   ],
-  imports: [
-    CommonModule,
-    DashboardRoutingModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    SharedModule,
-    MatTooltipModule,
-    MatCardModule,
-    MatProgressSpinnerModule,
-    MatDialogModule,
-    MatListModule,
-    MatTabsModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    FormsModule
-  ]
+    imports: [
+        CommonModule,
+        DashboardRoutingModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        SharedModule,
+        MatTooltipModule,
+        MatCardModule,
+        MatProgressSpinnerModule,
+        MatDialogModule,
+        MatListModule,
+        MatTabsModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        FormsModule,
+        MatSlideToggleModule,
+        MatStepperModule,
+        MatRadioModule,
+        MatSelectModule
+    ]
 })
 export class DashboardModule {
 }

@@ -1,0 +1,81 @@
+<div class="container">
+  <table mat-table [dataSource]="pushNotificationsArray">
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> სახელი </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <!-- Title Column -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> სათაური </th>
+      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+    </ng-container>
+
+    <!-- Message Column -->
+    <ng-container matColumnDef="message">
+      <th mat-header-cell *matHeaderCellDef> შეტყობინება </th>
+      <td mat-cell *matCellDef="let element"> {{element.text}} </td>
+    </ng-container>
+
+    <!-- Send Time Column -->
+    <ng-container matColumnDef="sendTime">
+      <th mat-header-cell *matHeaderCellDef> გაგზავნის დრო </th>
+      <td mat-cell *matCellDef="let element"> {{element.createdDate | date: 'M/d/yy, h:mm a'}} </td>
+    </ng-container>
+
+    <!-- Delivery Time Column -->
+    <ng-container matColumnDef="deliveryTime">
+      <th mat-header-cell *matHeaderCellDef> მიღების დრო </th>
+      <td mat-cell *matCellDef="let element"> {{element.deliveryDate | date: 'M/d/yy, h:mm a'}} </td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> სტატუსი </th>
+      <td mat-cell *matCellDef="let element">
+        <ng-container [ngSwitch]="element.status">
+          <p *ngSwitchCase="1">ელოდება მომხმარებელს</p>
+          <p *ngSwitchCase="2">ელოდება დადასტურებას</p>
+          <p *ngSwitchCase="3">არასწორი ინფორმაცია</p>
+          <p *ngSwitchCase="4">დადასტურებულია და ელოდება გაგზავნას</p>
+          <p *ngSwitchCase="5">გაგზავნილი</p>
+          <p *ngSwitchCase="6">შეცდომა გაგზავნის დროს</p>
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <!-- Type Column -->
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef> კლიენტის ტიპი </th>
+      <td mat-cell *matCellDef="let element"> {{element.isForLegalPersons ? 'იურიდიული' : 'ფიზიკური'}} </td>
+    </ng-container>
+
+    <!-- Buttons Column -->
+    <ng-container matColumnDef="buttons">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.canVerify">
+          <button mat-icon-button class="add" (click)="verifyNotification(element.id)" [matTooltip]="'დადასტურება'">
+            <mat-icon>add_circle</mat-icon>
+          </button>
+        </ng-container>
+        <ng-container>
+          <button mat-icon-button color="warn" (click)="deleteNotification(element.id)" [matTooltip]="'წაშლა'">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </ng-container>
+        <ng-container>
+          <button mat-icon-button color="primary" (click)="editNotification(element)" [matTooltip]="'რედაქტირება'">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+</div>

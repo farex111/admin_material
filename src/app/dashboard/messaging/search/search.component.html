@@ -1,0 +1,52 @@
+<form autocomplete="off" [formGroup]=searchForm>
+
+  <mat-form-field appearance="outline">
+    <mat-label>საძიებო სიტყვა</mat-label>
+    <input matInput placeholder="Search Word" formControlName="searchWord">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>პირადი ნომერი</mat-label>
+    <input matInput placeholder="01001022934" formControlName="searchIdNumber">
+    <mat-icon matSuffix>credit_card</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>მომხმარებლის სახელი</mat-label>
+    <input matInput placeholder="admin" formControlName="searchAdminName">
+    <mat-icon matSuffix>person</mat-icon>
+  </mat-form-field>
+
+  <div class="container">
+    <div class="dates">
+      <div class="from">
+        <mat-form-field appearance="outline">
+          <mat-label>თარიღი - დან</mat-label>
+          <input matInput [matDatepicker]="pickerFrom" formControlName="from">
+          <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFrom></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="to">
+        <mat-form-field appearance="outline">
+          <mat-label>თარიღი - მდე</mat-label>
+          <input matInput [matDatepicker]="pickerTo" formControlName="to">
+          <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+          <mat-datepicker #pickerTo></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="toggle-slide">
+      <mat-slide-toggle color="primary" formControlName="isSent">გაგზავნილი</mat-slide-toggle>
+      <mat-slide-toggle color="primary" formControlName="isInbox">შემოსული</mat-slide-toggle>
+    </div>
+  </div>
+
+  <div mat-dialog-actions class="buttons" [align]="'end'">
+    <button mat-button color="warn" [mat-dialog-close]="false">დახურვა</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="submitSearch()">ძებნა</button>
+  </div>
+</form>

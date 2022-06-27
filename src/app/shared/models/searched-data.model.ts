@@ -1,21 +1,21 @@
-export interface MessageInboxModel {
-  data: MessageInboxData;
-  message: string;
+export interface SearchedDataModel {
+  data: SearchedData;
   detailsMessage: string;
   externalState: number;
-  state: number;
-  errorCode: number;
-  validationErrors: Array<string>;
   isAuth: boolean;
+  message: string;
+  state: number;
+  validationErrors: string [];
+  errorCode: string;
 }
 
-export interface MessageInboxData {
-  itemList: Array<MessageInboxItemsList>;
+export interface SearchedData {
+  itemList: SearchedDataList[];
   pageCount: number;
-  totalItemsCount: number
+  totalItemCount: number
 }
 
-export interface MessageInboxItemsList {
+export interface SearchedDataList {
   authorFullName: string;
   body: string;
   clientFirstName: string;
@@ -27,9 +27,9 @@ export interface MessageInboxItemsList {
   id: number;
   isFromSystem: boolean;
   isReadByAdmin: boolean;
-  isReadByUser: string;
+  isReadByUser: boolean;
   personalNumber: string;
   subject: string;
   total: number;
-  unreadCount: number
+  unreadCount: number;
 }

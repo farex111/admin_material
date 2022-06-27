@@ -1,0 +1,20 @@
+<mat-tab-group mat-align-tabs="center">
+  <mat-tab label="ახალი შეტყობინება">
+    <ng-template matTabContent>
+      <app-new-notification></app-new-notification>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="შენახული">
+    <ng-template matTabContent>
+      <app-saved
+        [pushNotificationsArray]="pushNotificationsArray"
+        (refreshNotificationsArray)="getRefresh($event)">
+      </app-saved>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="ისტორია">
+    <ng-template matTabContent>
+      <app-history></app-history>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

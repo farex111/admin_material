@@ -1,5 +1,12 @@
 export interface UsersListModel {
   data: User[];
+  detailsMessage: string;
+  externalState: number;
+  errorCode: string;
+  isAuth: boolean;
+  message: string;
+  state: number;
+  validationErrors: Array<string>;
 }
 
 export interface User {
@@ -52,6 +59,13 @@ export interface UserCompanyRoles {
   reason: string;
   signLevel: number;
   company: Company;
+  role: Role;
+}
+
+export interface Role {
+  id: number;
+  name: string;
+  permissions: Array<string>;
 }
 
 export interface Company {
@@ -63,5 +77,4 @@ export interface Company {
   isActive: boolean;
   name: string;
   taxCode: string;
-  role: string;
 }

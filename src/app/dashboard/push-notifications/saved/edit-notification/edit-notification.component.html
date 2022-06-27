@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="header" [align]="'start'">
+    <h2 mat-dialog-title>შეტყობინების რედაქტირება</h2>
+  </div>
+
+  <div class="content" mat-dialog-content [align]="'center'">
+    <form autocomplete="off" [formGroup]="editForm">
+      <mat-radio-group aria-label="Select an option">
+        <mat-radio-button value="0">ავტორიზებულ მომხმარებელთან გაგზავნა</mat-radio-button>
+        <mat-radio-button value="1" checked>ტოპიკით გაგზავნა</mat-radio-button>
+      </mat-radio-group>
+
+      <mat-form-field appearance="outline">
+        <mat-label>ვისთან გსურთ გაგზავნა</mat-label>
+        <mat-select formControlName="topic">
+          <mat-option [value]="'Main'">ყველასთან გაგზავნა</mat-option>
+          <mat-option [value]="'Authorized'">ავტორიზებულ მომხმარებელთან გაგზავნა</mat-option>
+          <mat-option [value]="'Unauthorized'">არაავტორიზებულ მომხმარებელთან გაგზავნა</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>შეტყობინების სახელი</mat-label>
+        <input matInput placeholder="სატესტო სახელი" formControlName="name">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>შეტყობინების სათაური</mat-label>
+        <input matInput placeholder="სატესტო სათაური" formControlName="title">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>როდის გაიგზავნოს შეტყობინება?</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="date">
+        <mat-hint>თვე/დღე/წელი</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-radio-group aria-label="Select an option">
+        <mat-radio-button value="0" checked>ფიზიკური პირი</mat-radio-button>
+        <mat-radio-button value="1" disabled>იურიდიული პირი</mat-radio-button>
+      </mat-radio-group>
+
+      <mat-form-field appearance="outline">
+        <mat-label>შეტყობინება</mat-label>
+        <textarea
+          matInput
+          placeholder="სატესტო შეტყობინება"
+          rows="6"
+          formControlName="message">
+        </textarea>
+      </mat-form-field>
+    </form>
+  </div>
+
+  <div mat-dialog-actions class="buttons" [align]="'end'">
+    <button mat-button color="warn" [mat-dialog-close]="false">გაუქმება</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="true">რედაქტირება</button>
+  </div>
+</div>
+

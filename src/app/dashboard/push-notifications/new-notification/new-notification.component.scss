@@ -1,0 +1,15 @@
+form {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  mat-form-field {
+    margin-right: 10px;
+  }
+  mat-radio-group {
+    mat-radio-button {
+      margin-right: 10px;
+    }
+  }
+}
+

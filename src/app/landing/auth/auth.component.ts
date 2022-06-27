@@ -16,9 +16,11 @@ import {DialogComponent} from "../../shared/components/dialog/dialog.component";
 })
 export class AuthComponent implements OnInit, OnDestroy {
   hide: boolean = true;
+  className!: string;
   authorizationForm!: FormGroup;
   authorizeUserSub!: Subscription;
-  className!: string;
+
+  @ViewChild('container') container!: any;
 
   constructor(
     private fb: FormBuilder,
@@ -29,8 +31,6 @@ export class AuthComponent implements OnInit, OnDestroy {
     private dialog: MatDialog
   ) {
   }
-
-  @ViewChild('container') container!: any;
 
   ngOnInit(): void {
     this.initializeForm();

@@ -1,91 +1,59 @@
-<div class="container">
-  <div class="row">
+<div class="container" *ngIf="messages">
+  <div class="row" *userHasPermission="['All', 'Permissions.ReadMessage']">
 
     <section class="discussions">
       <div class="discussion search">
-        <div class="searchbar">
-          <i class="fa fa-search" aria-hidden="true"></i>
-          <input type="text" placeholder="Search...">
-        </div>
+        <button mat-stroked-button color="primary" routerLink="create">
+          <mat-icon>create</mat-icon> შექმნა
+        </button>
+        <button mat-stroked-button color="primary" (click)="openSearch()"><mat-icon>search</mat-icon>ძებნა</button>
       </div>
 
-      <div class="discussion">
+      <div
+        class="discussion"
+        *ngFor="let message of messages let i = index"
+        (click)="fetchMessageThread(message, i)"
+        [class.message-active]="selectedIndex === i"
+      >
         <div class="photo">
-          <mat-icon color="primary"> chat</mat-icon>
+          <mat-icon color="primary">chat</mat-icon>
         </div>
         <div class="desc-contact">
-          <p class="name">Megan Leib</p>
-          <p class="message">9 pm at the bar if possible 😳</p>
+          <p class="name">{{ message.isFromSystem ? "ოპერატორი" : "მომხმარებელი" }}: {{message.authorFullName}}</p>
+          <p class="subject">თემა: {{message.subject}}</p>
+          <p class="message">შეტყობინება: {{message.body}}</p>
         </div>
-        <div class="timer">12 sec</div>
+        <div class="timer">{{message.dateCreatedFormatted | date: "M/d/yy a"}}</div>
       </div>
+    </section>
 
-      <div class="discussion message-active">
-        <div class="photo" >
-          <mat-icon color="primary"> chat</mat-icon>
-        </div>
-        <div class="desc-contact">
-          <p class="name">Dave Corlew</p>
-          <p class="message">Let's meet for a coffee or something today ?</p>
-        </div>
-        <div class="timer">3 min</div>
+    <section class="chat" *ngIf="messagesThread">
+      <div class="header-chat">
+        <mat-icon>account_circle</mat-icon>
+        <p class="name">{{messagesThread[0].authorFullName}}, {{messagesThread[0].personalNumber}}</p>
       </div>
+      <div class="messages-chat">
+        <div class="message" *ngFor="let messageThread of messagesThread">
+          <div class="user-message" *ngIf="!messageThread.isFromSystem">
+            <p class="text" [matTooltip]="messageThread.dateCreatedFormatted"> {{messageThread.body}} </p>
+          </div>
 
-      <div class="discussion">
-        <div class="photo">
-          <mat-icon color="primary"> chat</mat-icon>
+          <div class="response" *ngIf="messageThread.isFromSystem">
+            <p class="text" [matTooltip]="messageThread.dateCreatedFormatted"> {{messageThread.body}} </p>
+          </div>
         </div>
-        <div class="desc-contact">
-          <p class="name">Jerome Seiber</p>
-          <p class="message">I've sent you the annual report</p>
-        </div>
-        <div class="timer">42 min</div>
       </div>
-
-      <div class="discussion">
-        <div class="photo">
-          <mat-icon color="primary"> chat</mat-icon>
-        </div>
-        <div class="desc-contact">
-          <p class="name">Thomas Dbtn</p>
-          <p class="message">See you tomorrow ! 🙂</p>
-        </div>
-        <div class="timer">2 hour</div>
+      <div class="footer-chat">
+        <form>
+          <button mat-icon-button color="primary">
+            <mat-icon> attach_file</mat-icon>
+          </button>
+          <textarea placeholder="მაქსიმუმ 1500 სიმბოლო" maxlength="1500"></textarea>
+          <button mat-icon-button color="primary">
+            <mat-icon>send</mat-icon>
+          </button>
+        </form>
       </div>
-
-      <div class="discussion">
-        <div class="photo">
-          <mat-icon color="primary"> chat</mat-icon>
-        </div>
-        <div class="desc-contact">
-          <p class="name">Elsie Amador</p>
-          <p class="message">What the f**k is going on ?</p>
-        </div>
-        <div class="timer">1 day</div>
-      </div>
-
-      <div class="discussion">
-        <div class="photo" >
-          <mat-icon color="primary"> chat</mat-icon>
-        </div>
-        <div class="desc-contact">
-          <p class="name">Billy Southard</p>
-          <p class="message">Ahahah 😂</p>
-        </div>
-        <div class="timer">4 days</div>
-      </div>
-
-      <div class="discussion">
-        <div class="photo" >
-          <mat-icon color="primary"> chat</mat-icon>
-        </div>
-        <div class="desc-contact">
-          <p class="name">Billy Southard</p>
-          <p class="message">Ahahah 😂</p>
-        </div>
-        <div class="timer">4 days</div>
-      </div>
-
     </section>
   </div>
 </div>

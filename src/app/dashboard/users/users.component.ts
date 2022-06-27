@@ -80,7 +80,6 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.fetchAdminUserInfo();
     this.initializeForm();
     this.userPermissionSub = this.userService.permissions.subscribe((res: string[]) => {
-      console.log(res)
       if (res !== undefined) {
         if (!res.includes('Permissions.SearchUser')) {
           this.router.navigate(['role-management'])
@@ -124,9 +123,9 @@ export class UsersComponent implements OnInit, OnDestroy {
   submitForm() {
     this.loadingService.start();
     const searchValue = this.searchForm.controls['searchValue'].value
-    this.userList$ = this.usersService.fetchUsers(searchValue)
-      .pipe(map((res: UsersListModel) => res.data),
-        finalize(() => this.loadingService.stop()));
+    this.userList$ = this.usersService.fetchUsers(searchValue).pipe(
+      map((res: UsersListModel) => res.data), finalize(() => this.loadingService.stop())
+    );
   }
 
   blockSsoUser(userId: number) {

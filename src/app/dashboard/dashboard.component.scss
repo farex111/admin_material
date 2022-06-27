@@ -41,6 +41,10 @@
             cursor: pointer;
           }
 
+          .active {
+            color: red !important;
+          }
+
           .nav-link:hover {
             color: black;
           }
@@ -50,6 +54,7 @@
 
     .right-section {
       display: flex;
+
       .name-wrapper {
         margin-right: 20px;
 

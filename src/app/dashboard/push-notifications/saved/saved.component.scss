@@ -1,0 +1,33 @@
+.container {
+  height: calc(100vh - 200px);
+  border-radius: 10px;
+  overflow: auto;
+
+  table {
+    width: 100%;
+
+    tr {
+      height: 0;
+      text-align: center;
+
+      th {
+        padding-top: 22px;
+        padding-bottom: 22px;
+        text-align: center;
+      }
+
+      td {
+        padding-top: 22px;
+        padding-bottom: 22px;
+
+        .add {
+          color: #32bea6;
+        }
+
+        .has-no-role {
+          color: red;
+        }
+      }
+    }
+  }
+}

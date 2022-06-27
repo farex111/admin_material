@@ -1,0 +1,45 @@
+<mat-stepper>
+  <mat-step label="Step 1" state="ask">
+    <p>Put down your phones.</p>
+    <div>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step label="Step 2" state="notification">
+    <form [formGroup]="notificationForm">
+      <ng-template matStepLabel>ახალი შეტყობინება</ng-template>
+      <mat-form-field appearance="outline">
+        <mat-label>სათაური</mat-label>
+        <input matInput placeholder="Subject" formControlName="subject">
+        <mat-icon matPrefix>create</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>გაგზავნის თარიღი</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="date">
+        <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-radio-group aria-label="Select an option">
+        <mat-radio-button value="1">ფიზიკური პირი</mat-radio-button>
+        <mat-radio-button value="2">იურიდიული პირი</mat-radio-button>
+      </mat-radio-group>
+    </form>
+    <div>
+      <button mat-button color="primary" matStepperPrevious>Back</button>
+      <button mat-button color="primary" matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step label="Step 3">
+    <p>You're welcome.</p>
+  </mat-step>
+
+  <!-- Icon overrides. -->
+  <ng-template matStepperIcon="phone">
+    <mat-icon>call_end</mat-icon>
+  </ng-template>
+  <ng-template matStepperIcon="chat">
+    <mat-icon>forum</mat-icon>
+  </ng-template>
+</mat-stepper>

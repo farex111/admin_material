@@ -1,38 +1,46 @@
 <div class="background">
-  <nav>
-    <div class="left-section">
-      <a class="logo"><img src="../../assets/images/logo.svg" alt="logo"></a>
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a  mat-stroked-button color="primary" class="nav-link" routerLink="users">მომხარებლები</a>
-        </li>
-        <li class="nav-item">
-          <a  mat-stroked-button color="primary" class="nav-link" routerLink="role-management">როლების მენეჯმენტი</a>
-        </li>
-        <li class="nav-item">
-          <a  mat-stroked-button color="primary" class="nav-link" routerLink="face-recognition">სახის ამოცნობის ლოგები</a>
-        </li>
-        <li class="nav-item">
-          <a  mat-stroked-button color="primary" class="nav-link" routerLink="loyal-program">ლოიალურობის პროგრამა</a>
-        </li>
-      </ul>
-    </div>
-    <div class="right-section">
-      <div class="name-wrapper">
-        <p>გამარჯობა,</p>
-        <h3>{{ userFirstName }} {{ userLastName }}</h3>
+    <nav>
+      <div class="left-section">
+        <a class="logo"><img src="../../assets/images/logo.svg" alt="logo"></a>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a  mat-stroked-button color="primary" class="nav-link"
+                routerLink="users" routerLinkActive="active">მომხარებლები</a>
+          </li>
+          <li class="nav-item">
+            <a  mat-stroked-button color="primary" class="nav-link"
+                routerLink="role-management" routerLinkActive="active">როლების მენეჯმენტი</a>
+          </li>
+          <li class="nav-item">
+            <a  mat-stroked-button color="primary" class="nav-link"
+                routerLink="face-recognition" routerLinkActive="active">სახის ამოცნობის ლოგები</a>
+          </li>
+          <li class="nav-item">
+            <a  mat-stroked-button color="primary" class="nav-link"
+                routerLink="loyal-program" routerLinkActive="active" >ლოიალურობის პროგრამა</a>
+          </li>
+          <li class="nav-item">
+            <a  mat-stroked-button color="primary" class="nav-link"
+                routerLink="push-notifications" routerLinkActive="active">Push შეტყობინებები</a>
+          </li>
+        </ul>
       </div>
-      <button mat-icon-button color="primary" routerLink="messaging" matTooltip="შეტყობინებები">
-        <mat-icon> chat</mat-icon>
-      </button>
-      <button mat-icon-button color="primary" routerLink="profile" matTooltip="პროფილი">
-        <mat-icon> settings</mat-icon>
-      </button>
-      <button mat-icon-button color="primary" (click)="logOut()" matTooltip="სისტებიმად გასვლა">
-        <mat-icon>power_settings_new</mat-icon>
-      </button>
-    </div>
-  </nav>
+      <div class="right-section">
+        <div class="name-wrapper">
+          <p>გამარჯობა,</p>
+          <h3>{{ userFirstName }} {{ userLastName }}</h3>
+        </div>
+        <button mat-icon-button color="primary" routerLink="messaging" matTooltip="შეტყობინებები">
+          <mat-icon> chat</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" routerLink="profile" matTooltip="პროფილი">
+          <mat-icon> settings</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" (click)="logOut()" matTooltip="სისტებიმად გასვლა">
+          <mat-icon>power_settings_new</mat-icon>
+        </button>
+      </div>
+    </nav>
 
   <div class="container">
     <router-outlet></router-outlet>

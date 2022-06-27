@@ -1,0 +1,21 @@
+form {
+  mat-form-field {
+    width: 100%;
+    mat-icon {
+      color: #757575;
+    }
+  }
+  .container {
+    .dates {
+      display: flex;
+      .from {
+        width: 50%;
+        padding-right: 20px;
+      }
+      .to {
+        width: 50%;
+        padding-left: 20px;
+      }
+    }
+  }
+}

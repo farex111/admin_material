@@ -1,0 +1,18 @@
+.container {
+  .header {
+    h2 {
+      padding-bottom: 20px;
+    }
+  }
+
+  .content {
+    form {
+      mat-form-field {
+        width: 100%;
+        textarea {
+          resize: none;
+        }
+      }
+    }
+  }
+}
